@@ -5,6 +5,8 @@ import com.redhat.shopping.catalog.CatalogStorage;
 import com.redhat.shopping.catalog.Product;
 import com.redhat.shopping.catalog.ProductNotFoundInCatalogException;
 import com.redhat.shopping.catalog.persistence.InMemoryCatalogStorage;
+
+import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusMock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,6 +23,20 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 @Tag("integration")
 public class ShoppingCartTest {
+
+    @BeforeAll
+    public static void setup() {
+        CatalogStorage mockStorage = Mockito.mock(InMemoryCatalogStorage.class);
+
+        Mockito.when(mockStorage.containsKey(1)).thenReturn(true);
+        Mockito.when(mockStorage.containsKey(2)).thenReturn(true);
+        Mockito.when(mockStorage.containsKey(9999)).thenReturn(true);
+
+        Mockito.when(mockStorage.get(1)).thenReturn(new Product(1, 100));
+        Mockito.when(mockStorage.get(2)).thenReturn(new Product(2, 200));
+
+        QuarkusMock.installMockForType(mockStorage, CatalogStorage.class);
+    }
 
     private int randomQuantity() {
         return (new Random()).nextInt(10) + 1;
