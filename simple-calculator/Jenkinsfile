@@ -57,3 +57,4 @@ void sendWarningAlert(String stage, String email) {
 		subject: "${stage} stage failed: ${currentBuild.fullDisplayName}",
 		body: "The ${stage} stage failed: ${env.BUILD_URL}"
 }
+
