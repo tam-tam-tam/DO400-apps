@@ -20,7 +20,7 @@ pipeline {
 						./scripts/build-and-push-image.sh \
 						-u $QUAY_USR \
 						-p $QUAY_PSW \
-						-b $BUILD)NUMBER 
+						-b $BUILD_NUMBER 
 					'''
 				}
 			}
