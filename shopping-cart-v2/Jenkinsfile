@@ -15,7 +15,7 @@ pipeline {
 			environment { QUAY = credentials('QUAY_USER') }
 			steps {
 				dir('shopping-cart-v2'){
-					sh './scripts/include-container-extension.sh'
+					sh './scripts/include-container-extensions.sh'
 					sh '''
 						./scripts/build-and-push-image.sh
 						-u $QUAY_USR \
